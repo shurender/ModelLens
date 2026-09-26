@@ -1,0 +1,48 @@
+[
+  {
+    "id": "tc_01",
+    "document": "refund_policy.pdf",
+    "question": "What is the refund period?",
+    "expected_answer": "Customers may request a refund within 30 days of purchase.",
+    "expected_status": "SUPPORTED",
+    "expected_diagnosis": "No Failure - Grounded Response",
+    "severity": "NONE"
+  },
+  {
+    "id": "tc_02",
+    "document": "refund_policy.pdf",
+    "question": "Are opened clearance items refundable?",
+    "expected_answer": "Clearance items and opened software products are strictly non-refundable.",
+    "expected_status": "SUPPORTED",
+    "expected_diagnosis": "No Failure - Grounded Response",
+    "severity": "NONE"
+  },
+  {
+    "id": "tc_03",
+    "document": "refund_policy.pdf",
+    "question": "What is the refund period?",
+    "mock_hallucination": "Refunds are available within 60 days.",
+    "expected_status": "CONTRADICTED",
+    "expected_diagnosis": "Likely Generation Failure",
+    "expected_reason": "The correct source document was retrieved (30 days), but the generated answer claims 60 days.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "tc_04",
+    "document": "refund_policy.pdf",
+    "question": "What is the company's Mars travel policy?",
+    "expected_status": "NOT_FOUND",
+    "expected_diagnosis": "Likely Retrieval Failure",
+    "expected_reason": "No relevant text chunks matching 'Mars travel policy' were found in the uploaded document.",
+    "severity": "MEDIUM"
+  },
+  {
+    "id": "tc_05",
+    "document": "leave_policy.pdf",
+    "question": "What is the annual leave carry-forward limit?",
+    "expected_status": "UNCERTAIN",
+    "expected_diagnosis": "Context Ambiguity / Partial Retrieval",
+    "expected_reason": "Retrieved passage mentions annual leave allocation but does not specify carry-forward limits.",
+    "severity": "LOW"
+  }
+]
