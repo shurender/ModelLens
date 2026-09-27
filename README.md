@@ -11,10 +11,7 @@ Watch the complete **1-minute 35-second** end-to-end walkthrough analyzing an en
 - **Direct Unboxed Output**: Large, readable typography directly on canvas with zero confining borders.
 - **Fact-Check Citations**: Expandable proof drawer revealing cited Page 1 and Page 2 snippets with similarity metrics.
 
-🎥 **Download / Watch Full Video with Audio**: [`modellens_income_demo_with_voiceover.mp4`](modellens_income_demo_with_voiceover.mp4)  
-🖼️ **Animated Web Preview**:
-
-![ModelLens Income Statement Demo](modellens_income_demo.webp)
+🎥 **Download / Watch Full Video**: [`ModelLens_Demo.mp4`](ModelLens_Demo.mp4)
 
 ---
 

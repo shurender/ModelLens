@@ -13,11 +13,3 @@ backend/tmp_uploads/
 node_modules/
 dist/
 
-# Large media & video recordings
-*.mp4
-*.webp
-*.wav
-*.mp3
-*.mov
-*.avi
-*.webm
