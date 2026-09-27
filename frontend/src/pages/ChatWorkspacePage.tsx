@@ -432,16 +432,6 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
                     <div className="text-sm font-semibold text-zinc-900 group-hover:text-black">
                       {isUploading ? 'Ingesting Document...' : 'Drop or attach your document here'}
                     </div>
-                    <div className="text-xs text-zinc-500 font-mono">
-                      Accepts PDF, Word (.docx), Plain Text, Markdown, CSV, JSON
-                    </div>
-                  </div>
-                  <div className="pt-2 flex flex-wrap gap-1.5 justify-center">
-                    {['PDF', 'DOCX', 'TXT', 'MD', 'CSV', 'JSON'].map((fmt) => (
-                      <span key={fmt} className="px-2 py-0.5 rounded bg-zinc-100 group-hover:bg-zinc-200/60 text-[10px] font-mono text-zinc-600 border border-zinc-200 transition-colors">
-                        {fmt}
-                      </span>
-                    ))}
                   </div>
                 </div>
               )}
