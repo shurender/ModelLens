@@ -31,7 +31,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenChat, isBackendOnline 
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-sm text-zinc-950 tracking-tight">ModelLens</span>
-            <span className="text-[10px] text-zinc-400 font-mono">Ground Truth Intelligence</span>
+            <span className="text-[10px] text-zinc-400 font-mono">AI Answer Checker</span>
           </div>
         </div>
 
@@ -69,10 +69,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenChat, isBackendOnline 
 
         {/* Hero Title & Subtitle */}
         <div className="space-y-4 max-w-3xl animate-slide-up">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-zinc-950 leading-[1.15]">
-            Ground Truth Intelligence for Enterprise Documents.
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-zinc-950 leading-[1.05]">
+            ModelLens
           </h1>
-          <p className="text-base sm:text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl font-medium text-zinc-800 max-w-2xl mx-auto tracking-tight">
+            AI Answer Checker & Document Observability
+          </p>
+          <p className="text-sm sm:text-base text-zinc-500 max-w-2xl mx-auto leading-relaxed">
             Eliminate AI hallucinations. ModelLens ingests your policies, financials, and contracts, answers questions in real time, and verifies factual claims with exact page citations.
           </p>
         </div>
