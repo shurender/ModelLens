@@ -27,7 +27,7 @@ import { DocumentInfo, QueryResponse, EvidenceItem } from '../types/api';
 import { executeQuery, uploadDocument, fetchDocuments, deleteDocument } from '../api/client';
 
 interface ChatWorkspacePageProps {
-  onBackToLanding?: () => void;
+  onBackToHome?: () => void;
 }
 
 interface ChatMessage {
@@ -40,7 +40,7 @@ interface ChatMessage {
 }
 
 export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
-  onBackToLanding,
+  onBackToHome,
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputQuestion, setInputQuestion] = useState('');
@@ -227,7 +227,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
       <aside className="w-64 border-r border-zinc-200 bg-[#F9FAFB] flex flex-col justify-between hidden md:flex z-20 transition-all">
         <div className="flex flex-col h-full overflow-hidden">
           {/* Header Branding & Action Row */}
-          <div className="p-3 border-b border-zinc-200/70 space-y-3">
+          <div className="p-3 border-b border-zinc-200/70 space-y-2.5">
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center space-x-2.5">
                 <div className="w-7 h-7 rounded-lg bg-black text-white flex items-center justify-center font-bold text-xs tracking-wider shadow-sm">
@@ -244,12 +244,23 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
               <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-200/60 text-zinc-600 font-medium">v1.0</span>
             </div>
 
+            {onBackToHome && (
+              <button
+                type="button"
+                onClick={onBackToHome}
+                className="w-full flex items-center space-x-2 px-2.5 py-1.5 rounded-lg text-xs font-mono text-zinc-600 hover:text-zinc-950 hover:bg-zinc-200/60 transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Home Page</span>
+              </button>
+            )}
+
             <button
               onClick={() => {
                 setMessages([]);
                 setInputQuestion('');
               }}
-              className="w-full py-2 px-3 rounded-lg bg-white hover:bg-zinc-100/90 text-zinc-800 hover:text-zinc-950 border border-zinc-200/80 text-xs font-mono font-medium flex items-center justify-between transition-all shadow-sm active:scale-[0.98]"
+              className="w-full py-2 px-3 rounded-lg bg-white hover:bg-zinc-100/90 text-zinc-800 hover:text-zinc-950 border border-zinc-200/80 text-xs font-mono font-medium flex items-center justify-between transition-all shadow-sm active:scale-[0.98] cursor-pointer"
               title="Start a new chat session"
             >
               <span className="flex items-center space-x-2">
@@ -325,9 +336,17 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
         {/* Top Header */}
         <header className="border-b border-zinc-200/80 bg-white/80 backdrop-blur-md px-6 py-3.5 flex items-center justify-between z-10">
           <div className="flex items-center space-x-3">
-            <div className="w-7 h-7 rounded-lg bg-black text-white flex md:hidden items-center justify-center font-bold text-xs shadow-sm">
-              <Bot className="w-4 h-4 stroke-[2.2]" />
-            </div>
+            {onBackToHome && (
+              <button
+                type="button"
+                onClick={onBackToHome}
+                className="flex items-center space-x-1.5 p-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-200 text-zinc-600 hover:text-zinc-950 transition-colors cursor-pointer text-xs font-mono"
+                title="Back to Home Page"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Home</span>
+              </button>
+            )}
 
             <div className="flex items-center space-x-2 text-xs font-mono">
               <span className="font-bold text-zinc-950">ModelLens</span>
@@ -343,32 +362,30 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
             </div>
           </div>
 
-          <div>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-zinc-50 border border-zinc-200 text-xs font-mono text-zinc-700 hover:text-zinc-950 flex items-center space-x-1.5 transition-all shadow-sm hover:shadow active:scale-95"
-            >
-              <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
-              <span>Attach File</span>
-            </button>
+          <div className="flex items-center space-x-2 text-xs font-mono text-zinc-400">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="hidden sm:inline text-zinc-500">Truth Engine Ready</span>
           </div>
         </header>
 
         {/* Messages / Central Workspace Container */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-7">
           {messages.length === 0 ? (
-            /* ── Beautiful ChatGPT-Style Home Screen ──────── */
-            <div className="max-w-2xl mx-auto h-full flex flex-col justify-center items-center text-center space-y-6 py-8 animate-slide-up">
-              <div className="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-white shadow-xl animate-float">
+            /* ── Clean ChatGPT-Style Empty State ──────── */
+            <div className="max-w-xl mx-auto h-full flex flex-col justify-center items-center text-center space-y-6 py-12 animate-slide-up">
+              <div className="w-14 h-14 rounded-2xl bg-zinc-950 flex items-center justify-center text-white shadow-lg animate-float">
                 <Bot className="w-7 h-7 text-white stroke-[2.2]" />
               </div>
 
               <div className="space-y-2">
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">
-                  What would you like to verify today?
+                  ModelLens Document Intelligence
                 </h2>
-                <p className="text-xs sm:text-sm text-zinc-500 max-w-lg mx-auto leading-relaxed">
-                  Upload any document to ask questions with real-time truth verification, exact page citations, and zero hallucinations.
+                <p className="text-xs sm:text-sm text-zinc-500 max-w-md mx-auto leading-relaxed">
+                  Upload any document to ask questions with real-time factual verification and page citations.
                 </p>
               </div>
 
@@ -384,7 +401,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
                         {selectedDoc.filename}
                       </div>
                       <div className="text-[11px] font-mono text-zinc-400 mt-0.5">
-                        {selectedDoc.pages} {selectedDoc.pages === 1 ? 'page' : 'pages'} · Ready for grounded queries
+                        {selectedDoc.pages} {selectedDoc.pages === 1 ? 'page' : 'pages'} · Ready for queries
                       </div>
                     </div>
                   </div>
@@ -428,43 +445,6 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
                   </div>
                 </div>
               )}
-
-              {/* Quick Suggestion Prompt Chips */}
-              <div className="w-full pt-2">
-                <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-2.5 text-left pl-1">
-                  Suggested Questions
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
-                  {[
-                    { title: "Financial Performance", prompt: "What was the total operating income and net income for Q4 2024?", icon: "📊" },
-                    { title: "Policy Terms", prompt: "What is the refund window and conditions for returns?", icon: "📑" },
-                    { title: "Geographic Breakdown", prompt: "What was the revenue and operating income for each geographic segment?", icon: "🌍" },
-                    { title: "Compliance Verification", prompt: "Are the policies verified in accordance with audit standards?", icon: "⚖️" }
-                  ].map((s, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => {
-                        setInputQuestion(s.prompt);
-                        if (selectedDoc) {
-                          handleSendMessage(s.prompt);
-                        }
-                      }}
-                      className="p-3 rounded-xl bg-white hover:bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 transition-all text-left shadow-xs hover:shadow group flex items-start space-x-3 cursor-pointer"
-                    >
-                      <span className="text-base mt-0.5">{s.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-xs font-semibold text-zinc-900 group-hover:text-black">
-                          {s.title}
-                        </div>
-                        <div className="text-[11px] text-zinc-500 truncate mt-0.5">
-                          {s.prompt}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
           ) : (
             /* ── ChatGPT-Style Message Stream (Direct Output On Screen) ────────── */
