@@ -28,6 +28,8 @@ import { executeQuery, uploadDocument, fetchDocuments, deleteDocument, API_BASE_
 
 interface ChatWorkspacePageProps {
   onBackToHome?: () => void;
+  isBackendOnline?: boolean;
+  onBackendOnline?: () => void;
 }
 
 interface ChatMessage {
@@ -41,6 +43,8 @@ interface ChatMessage {
 
 export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
   onBackToHome,
+  isBackendOnline = true,
+  onBackendOnline,
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputQuestion, setInputQuestion] = useState('');
@@ -65,6 +69,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
   useEffect(() => {
     fetchDocuments().then((docs) => {
       if (docs && docs.length > 0) {
+        onBackendOnline?.();
         setDocuments(docs);
         setSelectedDoc(docs[0]);
       } else {
@@ -72,7 +77,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
         setSelectedDoc(null);
       }
     });
-  }, []);
+  }, [onBackendOnline]);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -89,6 +94,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
     setIsUploading(true);
     try {
       const newDoc = await uploadDocument(file);
+      onBackendOnline?.();
       setDocuments((prev) => [newDoc, ...prev]);
       setSelectedDoc(newDoc);
     } catch (err: any) {
@@ -161,6 +167,7 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
 
     try {
       const res = await executeQuery(selectedDoc.id, question);
+      onBackendOnline?.();
       const assistantMsg: ChatMessage = {
         id: `ai_${Date.now()}`,
         sender: 'assistant',
@@ -241,8 +248,8 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
                 <div className="flex flex-col">
                   <span className="font-bold text-xs text-zinc-950 tracking-tight">ModelLens</span>
                   <span className="text-[10px] text-zinc-400 font-mono flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Engine Online</span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${isBackendOnline ? 'bg-emerald-500' : 'bg-amber-500'} animate-pulse`} />
+                    <span>{isBackendOnline ? 'Engine Online' : 'Connecting...'}</span>
                   </span>
                 </div>
               </div>

@@ -36,8 +36,11 @@ const client = axios.create({
 
 export const checkHealth = async (): Promise<boolean> => {
   try {
-    const res = await client.get('/health');
-    return res.data.status === 'ok';
+    const res = await client.get('/health', {
+      params: { _t: Date.now() },
+      timeout: 8000,
+    });
+    return Boolean(res.data && res.data.status === 'ok');
   } catch (err) {
     return false;
   }

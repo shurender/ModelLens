@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { HomePage } from './pages/HomePage';
 import { ChatWorkspacePage } from './pages/ChatWorkspacePage';
 import { checkHealth } from './api/client';
@@ -9,13 +9,20 @@ export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
   const [isBackendOnline, setIsBackendOnline] = useState<boolean>(false);
 
-  useEffect(() => {
-    checkHealth().then(setIsBackendOnline);
-    const interval = setInterval(() => {
-      checkHealth().then(setIsBackendOnline);
-    }, 15000);
-    return () => clearInterval(interval);
+  const verifyHealth = useCallback(async () => {
+    const online = await checkHealth();
+    setIsBackendOnline(online);
+    return online;
   }, []);
+
+  useEffect(() => {
+    verifyHealth();
+
+    // Check frequently (every 4s) while waking up; once online, relax to every 25s
+    const pollInterval = isBackendOnline ? 25000 : 4000;
+    const interval = setInterval(verifyHealth, pollInterval);
+    return () => clearInterval(interval);
+  }, [verifyHealth, isBackendOnline]);
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] text-zinc-900 font-sans selection:bg-zinc-200">
@@ -28,7 +35,14 @@ export const App: React.FC = () => {
 
       {currentView === 'chat' && (
         <div className="h-screen w-screen overflow-hidden">
-          <ChatWorkspacePage onBackToHome={() => setCurrentView('home')} />
+          <ChatWorkspacePage 
+            onBackToHome={() => {
+              verifyHealth();
+              setCurrentView('home');
+            }}
+            isBackendOnline={isBackendOnline}
+            onBackendOnline={() => setIsBackendOnline(true)}
+          />
         </div>
       )}
     </div>

@@ -36,7 +36,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenChat, isBackendOnline 
         </div>
 
         <div className="flex items-center space-x-3">
-          <div className="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-mono">
+          <div 
+            title={isBackendOnline ? 'Backend engine is online and ready' : 'Connecting to engine (Render cloud backend may take ~30s if waking up from sleep)'}
+            className="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-mono cursor-default"
+          >
             <span className="relative flex h-2 w-2">
               <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isBackendOnline ? 'bg-emerald-400' : 'bg-amber-400'} opacity-75`} />
               <span className={`relative inline-flex rounded-full h-2 w-2 ${isBackendOnline ? 'bg-emerald-500' : 'bg-amber-500'}`} />
