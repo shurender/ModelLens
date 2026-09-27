@@ -24,7 +24,7 @@ import {
   FileSearch
 } from 'lucide-react';
 import { DocumentInfo, QueryResponse, EvidenceItem } from '../types/api';
-import { executeQuery, uploadDocument, fetchDocuments, deleteDocument } from '../api/client';
+import { executeQuery, uploadDocument, fetchDocuments, deleteDocument, API_BASE_URL } from '../api/client';
 
 interface ChatWorkspacePageProps {
   onBackToHome?: () => void;
@@ -93,7 +93,12 @@ export const ChatWorkspacePage: React.FC<ChatWorkspacePageProps> = ({
       setSelectedDoc(newDoc);
     } catch (err: any) {
       console.error('Upload failed:', err);
-      alert(err.response?.data?.detail || 'Failed to upload document.');
+      const detail = err.response?.data?.detail;
+      const isNetworkErr = !err.response || err.code === 'ERR_NETWORK';
+      const msg = detail || (isNetworkErr
+        ? `Unable to connect to backend API (${API_BASE_URL}). If using Vercel, please set VITE_API_BASE_URL to your deployed backend URL in Vercel Project Settings.`
+        : 'Failed to upload document.');
+      alert(msg);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';

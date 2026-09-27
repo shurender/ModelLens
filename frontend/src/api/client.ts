@@ -2,7 +2,7 @@ import axios from 'axios';
 import { QueryResponse, DocumentInfo, TraceItem, DashboardMetrics } from '../types/api';
 
 const rawBaseUrl = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:8000';
-const API_BASE_URL = rawBaseUrl.startsWith('http') ? rawBaseUrl : `https://${rawBaseUrl}`;
+export const API_BASE_URL = rawBaseUrl.startsWith('http') ? rawBaseUrl : `https://${rawBaseUrl}`;
 
 const client = axios.create({
   baseURL: API_BASE_URL,
