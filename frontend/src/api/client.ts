@@ -2,27 +2,26 @@ import axios from 'axios';
 import { QueryResponse, DocumentInfo, TraceItem, DashboardMetrics } from '../types/api';
 
 function resolveApiBaseUrl(): string {
-  const envUrl = (import.meta as any).env?.VITE_API_BASE_URL;
-  if (!envUrl) {
-    return 'http://localhost:8000';
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (envUrl && envUrl.trim()) {
+    const trimmed = envUrl.trim();
+    if (trimmed.includes('localhost') || trimmed.includes('127.0.0.1')) {
+      return trimmed.startsWith('http') ? trimmed : `http://${trimmed}`;
+    }
+    let hostname = trimmed.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+    if (!hostname.includes('.')) {
+      hostname = `${hostname}.onrender.com`;
+    }
+    return `https://${hostname}`;
   }
 
-  const trimmed = String(envUrl).trim();
-
-  // If localhost or local IP
-  if (trimmed.includes('localhost') || trimmed.includes('127.0.0.1')) {
-    return trimmed.startsWith('http') ? trimmed : `http://${trimmed}`;
+  // In production builds (Render, Vercel), default to the live Render backend
+  if (import.meta.env.PROD) {
+    return 'https://modellens-backend.onrender.com';
   }
 
-  // Extract hostname without protocol and trailing slashes
-  let hostname = trimmed.replace(/^https?:\/\//, '').replace(/\/+$/, '');
-
-  // If Render passed internal service name (e.g. "modellens-backend") without TLD
-  if (!hostname.includes('.')) {
-    hostname = `${hostname}.onrender.com`;
-  }
-
-  return `https://${hostname}`;
+  // Local development fallback
+  return 'http://localhost:8000';
 }
 
 export const API_BASE_URL = resolveApiBaseUrl();

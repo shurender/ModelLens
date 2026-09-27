@@ -29,7 +29,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: modellens-backend
-          property: host
+        value: https://modellens-backend.onrender.com
