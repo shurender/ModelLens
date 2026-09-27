@@ -2,8 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes import query
+from extraction.routes import documents
 
-app = FastAPI(title="ModelLens Lite API")
+app = FastAPI(title="ModelLens API", description="AI Grounding & Observability Engine")
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,6 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Connect both Document Extraction and Query routers
+app.include_router(documents.router)
 app.include_router(query.router)
 
 

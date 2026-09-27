@@ -43,7 +43,7 @@ if not logger.handlers:
 # ---------------------------------------------------------------------------
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-DEFAULT_MODEL = "openai/gpt-oss-120b"
+DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "openai/gpt-oss-120b")
 DEFAULT_TIMEOUT_SECONDS = 30
 MAX_RETRIES = 2
 INITIAL_BACKOFF_SECONDS = 1.0

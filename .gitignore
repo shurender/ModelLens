@@ -1,7 +1,23 @@
 .venv/
+venv/
 __pycache__/
 
-
-.env    
+.env
+.env.local
 .vscode/
 
+# Backend temp uploads
+backend/tmp_uploads/
+
+# Frontend
+node_modules/
+dist/
+
+# Large media & video recordings
+*.mp4
+*.webp
+*.wav
+*.mp3
+*.mov
+*.avi
+*.webm

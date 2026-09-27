@@ -1,6 +1,10 @@
 fastapi
 uvicorn[standard]
 python-multipart
+pymupdf
+scikit-learn
+numpy
 httpx
 python-dotenv
 pydantic
+python-docx

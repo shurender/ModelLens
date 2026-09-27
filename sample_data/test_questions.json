@@ -1,0 +1,41 @@
+[
+  {
+    "id": "case_1",
+    "description": "Supported — refund period is stated clearly",
+    "document": "refund_policy.pdf",
+    "question": "What is the refund period?",
+    "expected_evidence_keywords": ["30 days"],
+    "expected_status": "SUPPORTED"
+  },
+  {
+    "id": "case_2",
+    "description": "Supported — clearance items not refundable",
+    "document": "refund_policy.pdf",
+    "question": "Are opened clearance items refundable?",
+    "expected_evidence_keywords": ["clearance", "not eligible"],
+    "expected_status": "SUPPORTED"
+  },
+  {
+    "id": "case_3",
+    "description": "Contradicted — fixture: force answer to say 60 days",
+    "document": "refund_policy.pdf",
+    "question": "What is the refund period?",
+    "forced_answer": "The refund period is 60 days.",
+    "expected_status": "CONTRADICTED",
+    "note": "Use the forced_answer field to bypass LLM generation for this test case."
+  },
+  {
+    "id": "case_4",
+    "description": "Not found — question has no evidence in the document",
+    "document": "refund_policy.pdf",
+    "question": "What is the company's Mars travel policy?",
+    "expected_status": "NOT_FOUND"
+  },
+  {
+    "id": "case_5",
+    "description": "Uncertain — evidence partially answers the question",
+    "document": "leave_policy.pdf",
+    "question": "What is the leave carry-forward limit?",
+    "expected_status": "UNCERTAIN"
+  }
+]
