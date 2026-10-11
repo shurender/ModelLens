@@ -1,5 +1,5 @@
 # ModelLens — Ground Truth Intelligence & AI Grounding Engine
-
+forked and enhanced  with IBM Granite integration + deployment 
 > **ModelLens** is an end-to-end AI document intelligence and verification platform. It guarantees factual grounding, prevents hallucinations, extracts citations with exact page numbers, and detects contradictions in real time.
 
 ---
@@ -181,3 +181,4 @@ graph TD
 
 ## 📄 License
 MIT License. Free for open source and enterprise development.
+# front end done by avani sb
